@@ -9,24 +9,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import next.school.cesar.desafioSpring.entities.Client;
-import next.school.cesar.desafioSpring.repositories.ClientRepository;
+import next.school.cesar.desafioSpring.entities.Insurance;
+import next.school.cesar.desafioSpring.repositories.InsuranceRepository;
 
 @RestController
-@RequestMapping("/clients")
-public class ClientController {
+@RequestMapping("/insurances")
+public class InsuranceController {
     
     @Autowired
-    private ClientRepository repository;
+    private InsuranceRepository repository;
 
     @GetMapping
-    public List<Client> getClients(){
+    public List<Insurance> getInsurances(){
         return repository.findAll();
     }
-    
-    @PostMapping
-    public Client createClient(@RequestBody Client client){
-        return repository.save(client);
-    }
 
+    @PostMapping
+    public Insurance createInsurance(@RequestBody Insurance insurance){
+        return repository.save(insurance);
+    }
 }
