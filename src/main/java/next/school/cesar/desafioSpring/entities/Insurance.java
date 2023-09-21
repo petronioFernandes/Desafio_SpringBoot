@@ -2,6 +2,8 @@ package next.school.cesar.desafioSpring.entities;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,5 +40,6 @@ public class Insurance {
 
      @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
+    @JsonBackReference
     private Client client;
 }

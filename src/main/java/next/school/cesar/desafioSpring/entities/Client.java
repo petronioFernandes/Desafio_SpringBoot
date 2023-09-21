@@ -34,9 +34,9 @@ public class Client {
     private double income;
     @Column(nullable = false)
     private String marital_status;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate createdAt;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate updatedAt;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE} )

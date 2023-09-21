@@ -1,5 +1,7 @@
 package next.school.cesar.desafioSpring.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +31,8 @@ public class Vehicle {
     private int year;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "client_id")
+    @JsonBackReference
     private Client client;
 
 }
