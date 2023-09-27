@@ -14,46 +14,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import next.school.cesar.desafioSpring.DTO.HouseDTO;
+import next.school.cesar.desafioSpring.DTO.HouseUpdateDTO;
 import next.school.cesar.desafioSpring.entities.House;
 import next.school.cesar.desafioSpring.repositories.HouseRepository;
+import next.school.cesar.desafioSpring.services.HouseService;
 
 @RestController
 @RequestMapping("/houses")
 public class HouseController {
     
     @Autowired
-    private HouseRepository repository;
+    private HouseService service;
 
     @GetMapping
     public ResponseEntity<List<House>> getHouses(){
-        List <House> houses = repository.findAll();
+        List <House> houses = service.listAllHouses();
     	return new ResponseEntity<>(houses, HttpStatus.OK);
     }
     
     @PostMapping
-    public ResponseEntity<House> createHouse(@RequestBody House house){
-        House createdHouse = repository.save(house);
+    public ResponseEntity<House> createHouse(@RequestBody HouseDTO houseDTO){
+        House createdHouse = service.createHouse(houseDTO);
     	return new ResponseEntity<>(createdHouse, HttpStatus.OK);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<House> updateHouse(@PathVariable long id, @RequestBody House houseUpdate){
-    	House house = repository.findById(id).orElse(null);
-    	if (house == null) {
+    public ResponseEntity<House> updateHouse(@PathVariable long id, @RequestBody HouseUpdateDTO houseUpdateDTO){
+    	House updatedHouse = service.updateHouse(houseUpdateDTO, id);
+    	if (updatedHouse == null) {
     		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     	}else {
-    		House updatedHouse = repository.save(houseUpdate);
     		return new ResponseEntity<> (updatedHouse, HttpStatus.OK);
     	}
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<House> deleteHouse(@PathVariable long id){
-        House house = repository.findById(id).orElse(null);
-        if(house == null){
+        boolean house = service.delete(id);
+        if(house == false){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else{
-            repository.delete(house);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
